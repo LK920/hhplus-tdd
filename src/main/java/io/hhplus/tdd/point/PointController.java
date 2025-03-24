@@ -2,6 +2,7 @@ package io.hhplus.tdd.point;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +22,11 @@ public class PointController {
      * 특정 유저의 포인트를 조회하는 기능
      */
     @GetMapping("{id}")
-    public UserPoint point(
+    public ResponseEntity<UserPoint> point(
             @PathVariable long id
-    ) throws Exception {
-        return pointService.getUserPoint(id);
+    ) {
+        UserPoint userPoint =  pointService.getUserPoint(id);
+        return ResponseEntity.ok(userPoint);
     }
 
     /**
@@ -33,7 +35,7 @@ public class PointController {
     @GetMapping("{id}/histories")
     public List<PointHistory> history(
             @PathVariable long id
-    ) throws Exception {
+    ) {
         return pointService.getPointHistory(id);
     }
 
@@ -44,7 +46,7 @@ public class PointController {
     public UserPoint charge(
             @PathVariable long id,
             @RequestBody long amount
-    ) throws Exception {
+    ) {
         return pointService.chargePoint(id, amount);
     }
 
@@ -55,7 +57,7 @@ public class PointController {
     public UserPoint use(
             @PathVariable long id,
             @RequestBody long amount
-    ) throws Exception {
+    ) {
         return pointService.usePoint(id, amount);
     }
 }

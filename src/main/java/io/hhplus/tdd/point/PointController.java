@@ -22,11 +22,10 @@ public class PointController {
      * 특정 유저의 포인트를 조회하는 기능
      */
     @GetMapping("{id}")
-    public ResponseEntity<UserPoint> point(
+    public UserPoint point(
             @PathVariable long id
     ) {
-        UserPoint userPoint =  pointService.getUserPoint(id);
-        return ResponseEntity.ok(userPoint);
+        return pointService.getUserPoint(id);
     }
 
     /**

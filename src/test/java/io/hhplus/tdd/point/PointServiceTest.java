@@ -113,9 +113,9 @@ public class PointServiceTest {
 
     @Test
     void 포인트_사용_시_잔고_부족_예외_발생(){
-        UserPoint userPoint = new UserPoint(1,100000,System.currentTimeMillis());
+        UserPoint userPoint = new UserPoint(1,100,System.currentTimeMillis());
         when(userPointTable.selectById(anyLong())).thenReturn(userPoint);
-        assertThatThrownBy(()->pointService.chargePoint(1,2)).isInstanceOf(MaxBalanceExceededException.class);
+        assertThatThrownBy(()->pointService.usePoint(1,101)).isInstanceOf(BalanceNotEnoughException.class);
     }
 
     @Test

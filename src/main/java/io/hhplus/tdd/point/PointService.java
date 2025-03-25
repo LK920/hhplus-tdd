@@ -17,8 +17,6 @@ public class PointService {
     private final PointHistoryTable pointHistoryTable;
 
     private static long MAX_BALANCE = 100000l;
-    private static long MIN_BALANCE = 0l;
-
 
     public PointService(UserPointTable userPointTable, PointHistoryTable pointHistoryTable) {
         this.userPointTable = userPointTable;

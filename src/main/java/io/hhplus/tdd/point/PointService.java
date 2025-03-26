@@ -15,26 +15,25 @@ public class PointService {
     private static final Logger log = LoggerFactory.getLogger(PointService.class);
     private final UserPointTable userPointTable;
     private final PointHistoryTable pointHistoryTable;
-
+    private final PointValidator pointValidator;
     private static long MAX_BALANCE = 100000l;
 
-    public PointService(UserPointTable userPointTable, PointHistoryTable pointHistoryTable) {
+    public PointService(UserPointTable userPointTable, PointHistoryTable pointHistoryTable, PointValidator pointValidator) {
         this.userPointTable = userPointTable;
         this.pointHistoryTable = pointHistoryTable;
+        this.pointValidator = pointValidator;
     }
 
     public UserPoint getUserPoint(long id)  {
         // 유저 포인트 조회
-        if(id < 0){throw new NegativeIdException();}
-        if(id == 0){throw new ZeroIdException();}
+        pointValidator.validateId(id);
         return userPointTable.selectById(id);
     }
 
     public List<PointHistory> getPointHistory(long id) {
         // 유저 포인트 내역 조회
 
-        if(id < 0){throw new NegativeIdException();}
-        if(id == 0){throw new ZeroIdException();}
+        pointValidator.validateId(id);
         List<PointHistory> history = pointHistoryTable.selectAllByUserId(id);
         if(history.size() == 0){ throw new PointHistoryNotFoundException(id);}
         return history;
@@ -45,9 +44,8 @@ public class PointService {
         // 유저 포인트 충전
         // 유전 포인트 + 충전 포인트
         // 유저 충전 내역 추가
-        if(id < 0){throw new NegativeIdException();}
-        if(id == 0){throw new ZeroIdException();}
-        if(amount < 0){throw new NegativePointException();}
+        pointValidator.validateId(id);
+        pointValidator.validateAmount(amount);
         UserPoint currentPoint = userPointTable.selectById(id);
         long sumPoint = currentPoint.point() + amount;
         if(sumPoint > MAX_BALANCE){
@@ -64,10 +62,8 @@ public class PointService {
 
         // 유저 포인트 사용
         // 유저 포인트 - 사용한 포인트
-        if(id < 0){throw new NegativeIdException();}
-        if(id == 0){throw new ZeroIdException();}
-        if(amount < 0){throw new NegativePointException();}
-
+        pointValidator.validateId(id);
+        pointValidator.validateAmount(amount);
         UserPoint currentPoint = userPointTable.selectById(id);
         if (currentPoint.point() < amount) {
             throw new BalanceNotEnoughException(currentPoint.point());

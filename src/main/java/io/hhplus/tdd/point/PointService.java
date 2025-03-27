@@ -73,7 +73,7 @@ public class PointService {
         UserPoint updatedPoint = userPointTable.insertOrUpdate(id, currentPoint.point() - amount);
         
         // 유저 포인트 내역 테이블에 추가
-        pointHistoryTable.insert(id, amount, TransactionType.USE, System.currentTimeMillis());
+        pointHistoryTable.insert(id, currentPoint.point() - amount, TransactionType.USE, System.currentTimeMillis());
         
         return updatedPoint;
     }

@@ -23,14 +23,14 @@ import static org.mockito.Mockito.when;
 public class PointServiceTest {
 
     // 실제 테스트 객체
-    public PointService pointService;
+    private PointService pointService;
 
     @Mock // 가짜 객체 생성(테스트하려는 객체의 의존성 제거)
-    public PointHistoryTable pointHistoryTable;
+    private PointHistoryTable pointHistoryTable;
     @Mock
-    public UserPointTable userPointTable;
+    private UserPointTable userPointTable;
     @Mock
-    public PointValidator pointValidator;
+    private PointValidator pointValidator;
 
     @BeforeEach // @Test 시작전에 수행하는 작업
     void setUp(){

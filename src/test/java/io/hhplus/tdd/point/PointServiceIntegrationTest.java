@@ -34,7 +34,6 @@ public class PointServiceIntegrationTest {
 
     @BeforeEach
     void setUp(){
-        pointService = new PointService(userPointTable, pointHistoryTable, pointValidator); // 초기화
         userPointTable.selectById(1l); // 유저 생성
     }
 
